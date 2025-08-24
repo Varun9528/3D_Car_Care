@@ -134,7 +134,7 @@ export default function App() {
     return () => clearTimeout(t);
   }, []);
 
-  const qrUrl = "https://3d-car-care-gxv6w5doy-varun-tiroles-projects.vercel.app/";
+  const qrUrl = "https://3d-car-care-app.vercel.app/";
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(qrUrl);
