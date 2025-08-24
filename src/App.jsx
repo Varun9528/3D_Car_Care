@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Facebook, Instagram, MapPin, ExternalLink, QrCode } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
+import carImage from "../public/3d.png";
 
 const LINKS = [
   { label: "Instagram", href: "https://www.instagram.com/3dcarcare_indore/?igsh=ZnB3NzJ2anhtdXdw#", icon: <Instagram className="w-5 h-5" />, sub: "@3dcarcare_indore" },
@@ -77,12 +78,13 @@ function CarSVG({ className = "" }) {
 function CarImage({ className = "" }) {
   return (
     <img
-      src="public\3d.png" 
+      src={carImage}
       alt="3D Car Care Car"
       className={`w-full h-full object-contain drop-shadow-[0_0_25px_#00B140] ${className}`}
     />
   );
 }
+
 
 function LoadingSplash({ show }) {
   return (
@@ -132,7 +134,7 @@ export default function App() {
     return () => clearTimeout(t);
   }, []);
 
-  const qrUrl = typeof window !== "undefined" ? window.location.href : "https://3dcarcare.example";
+  const qrUrl = "https://3d-car-care-gxv6w5doy-varun-tiroles-projects.vercel.app/";
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(qrUrl);
@@ -141,6 +143,14 @@ export default function App() {
     } catch (e) { console.error(e); }
   };
 
+  const handleDownload = () => {
+    const canvas = document.querySelector("canvas");
+    if (!canvas) return;
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = "3dcarcare_qr.png";
+    link.click();
+  };
   return (
     <div className="relative min-h-screen text-white">
       <LoadingSplash show={loading} />
@@ -221,9 +231,29 @@ export default function App() {
                 <QRCodeCanvas value={qrUrl} size={200} includeMargin={false} />
               </div>
             </div>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <button onClick={handleCopy} className="rounded-xl border border-white/10 bg-gradient-to-r from-green-500/20 to-emerald-400/20 px-3 py-2 text-sm font-semibold">{copied ? "Copied URL" : "Copy URL"}</button>
-              <a href={qrUrl} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-semibold text-center">Open Page</a>
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              <button
+                onClick={handleCopy}
+                className="rounded-xl border border-white/10 bg-gradient-to-r from-green-500/20 to-emerald-400/20 px-3 py-2 text-sm font-semibold"
+              >
+                {copied ? "Copied URL" : "Copy URL"}
+              </button>
+
+              <button
+                onClick={handleDownload}
+                className="rounded-xl border border-white/10 bg-gradient-to-r from-green-500/20 to-emerald-400/20 px-3 py-2 text-sm font-semibold"
+              >
+                Download QR
+              </button>
+
+              <a
+                href={qrUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-semibold text-center"
+              >
+                Open Page
+              </a>
             </div>
             <div className="pointer-events-none absolute -inset-1 opacity-20 blur-2xl bg-gradient-to-r from-green-500 via-emerald-400 to-green-500" />
           </div>
