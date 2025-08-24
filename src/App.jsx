@@ -246,7 +246,14 @@ export default function App() {
                 Download QR
               </button>
 
-             
+              <a
+                href={qrUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-semibold text-center"
+              >
+                Open Page
+              </a>
             </div>
             <div className="pointer-events-none absolute -inset-1 opacity-20 blur-2xl bg-gradient-to-r from-green-500 via-emerald-400 to-green-500" />
           </div>
